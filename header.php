@@ -30,6 +30,14 @@ if (session_status() == PHP_SESSION_NONE) {
             gap: 2rem;
         }
 
+        /* Contenedor para logo y dropdown */
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            flex-shrink: 0;
+        }
+
         .logo {
             display: flex;
             align-items: center;
@@ -40,7 +48,6 @@ if (session_status() == PHP_SESSION_NONE) {
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             cursor: pointer;
-            flex-shrink: 0;
         }
 
         .logo img {
@@ -117,7 +124,6 @@ if (session_status() == PHP_SESSION_NONE) {
         /* Dropdown de categorías */
         .category-dropdown {
             position: relative;
-            margin-right: 1rem;
         }
 
         .category-btn {
@@ -214,6 +220,11 @@ if (session_status() == PHP_SESSION_NONE) {
                 padding: 0 1rem;
             }
 
+            .logo-container {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+
             .search-container {
                 margin: 0;
                 max-width: none;
@@ -225,38 +236,36 @@ if (session_status() == PHP_SESSION_NONE) {
                 flex-wrap: wrap;
                 justify-content: center;
             }
-
-            .category-dropdown {
-                margin-right: 0;
-            }
         }
     </style>
 </head>
 <body>
     <header>
         <nav>
-            <div class="logo">
-                <img src="img-MATEX.png" alt="Logo Matex" />
-                Matex
-            </div>
-
-            <!-- Dropdown de categorías -->
-            <div class="category-dropdown">
-                <button class="category-btn" onclick="toggleDropdown()">
-                    Categorías
-                    <svg width="12" height="12" viewBox="0 0 12 12" fill="currentColor">
-                        <path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
-                    </svg>
-                </button>
-                <div class="category-dropdown-content" id="categoryDropdown">
-                    <a href="mates.php">🧉 Mates</a>
-                    <a href="yerbas.php">🌿 Yerbas</a>
-                    <a href="bombillas.php">🥤 Bombillas</a>
-                    <a href="termos.php">🍶 Termos</a>
-                    <a href="accesorios.php">🎯 Accesorios</a>
+            <!-- Contenedor para logo y dropdown -->
+            <div class="logo-container">
+                <div class="logo">
+                    <img src="img-MATEX.png" alt="Logo Matex" />
+                    Matex
+                </div>
+                
+                <!-- Dropdown de categorías pegado al logo -->
+                <div class="category-dropdown">
+                    <button class="category-btn" onclick="toggleDropdown()">
+                        Categorías
+                        <svg width="12" height="12" viewBox="0 0 12 12" fill="currentColor">
+                            <path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </button>
+                    <div class="category-dropdown-content" id="categoryDropdown">
+                        <a href="mates.php">🧉 Mates</a>
+                        <a href="yerbas.php">🌿 Yerbas</a>
+                        <a href="bombillas.php">🥤 Bombillas</a>
+                        <a href="termos.php">🍶 Termos</a>
+                        <a href="accesorios.php">🎯 Accesorios</a>
+                    </div>
                 </div>
             </div>
-
 
             <ul class="nav-links">
                 <li><a href="index.php" class="<?= (basename($_SERVER['PHP_SELF']) == 'index.php') ? 'active' : '' ?>">Inicio</a></li>
@@ -275,7 +284,7 @@ if (session_status() == PHP_SESSION_NONE) {
                     <li class="user-info">Hola, <?= htmlspecialchars($_SESSION['username']) ?>!</li>
                     <li><a href="logout.php">Cerrar Sesión</a></li>
                 <?php else: ?>
-                    <li><a href="login.php" class="<?= (basename($_SERVER['PHP_SELF']) == 'login.php') ? 'active' : '' ?>">Inicio</a></li>
+                    <li><a href="login.php" class="<?= (basename($_SERVER['PHP_SELF']) == 'login.php') ? 'active' : '' ?>">Inicio Sesion</a></li>
                     <li><a href="registro.php" class="<?= (basename($_SERVER['PHP_SELF']) == 'registro.php') ? 'active' : '' ?>">Registro</a></li>
                 <?php endif; ?>
             </ul>
