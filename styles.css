@@ -1,0 +1,941 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #334155 100%);
+    color: #ffffff;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* HEADER y NAV (Estilos consolidados de header.php y estilos.css) */
+header {
+    background: rgba(15, 23, 42, 0.9);
+    backdrop-filter: blur(10px);
+    padding: 1.2rem 0;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+nav {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 2rem;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    font-size: 2rem; /* Mantengo este tamaño para el texto "Matex" */
+    font-weight: bold;
+    background: linear-gradient(45deg, #22c55e, #16a34a);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.logo img {
+    height: 40px;
+    width: auto;
+    border-radius: 8px;
+}
+
+.nav-links {
+    display: flex;
+    list-style: none;
+    gap: 2rem;
+    align-items: center;
+}
+
+.nav-links a {
+    color: #ffffff;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    position: relative;
+    padding: 0.5rem 1rem;
+    font-size: 1.1rem; /* Consolidado para nav-links a */
+}
+
+.nav-links a:hover {
+    color: #22c55e;
+    transform: translateY(-2px);
+}
+
+.nav-links a.active {
+    color: #22c55e;
+    font-weight: bold;
+}
+
+.user-info {
+    color: #f1f5f9;
+    font-size: 1.1rem;
+    margin-right: 1rem;
+    font-weight: 500;
+}
+
+/* MAIN CONTENT */
+main {
+    flex: 1; /* Permite que el contenido principal ocupe el espacio restante */
+}
+
+/* PRODUCTOS GRID Y CARDS */
+.productos-container {
+    max-width: 1200px;
+    margin: 2rem auto 4rem; /* Ajuste para un espaciado más consistente */
+    padding: 0 2rem;
+}
+
+.productos-grid {
+    display: grid;
+    /* Vuelve al tamaño original del minmax para tarjetas más grandes */
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 2rem; /* Vuelve al espaciado original */
+    margin-bottom: 3rem;
+}
+
+.producto-card {
+    background: rgba(30, 41, 59, 0.8);
+    backdrop-filter: blur(10px);
+    border-radius: 20px; /* Vuelve al border-radius original */
+    padding: 2rem; /* Vuelve al padding interno original */
+    text-align: center;
+    transition: all 0.3s ease;
+    border: 1px solid rgba(34, 197, 94, 0.2);
+    position: relative;
+    overflow: hidden;
+    color: white;
+    /* max-width se remueve o se deja más grande para no limitar el crecimiento */
+    max-width: none; /* Permite que crezca según el grid */
+    justify-self: stretch; /* Estira las tarjetas para llenar el espacio */
+}
+
+.producto-card:hover {
+    transform: translateY(-10px); /* Vuelve al desplazamiento original */
+    box-shadow: 0 20px 40px rgba(34, 197, 94, 0.2); /* Vuelve a la sombra original */
+    border-color: rgba(34, 197, 94, 0.5);
+}
+
+.imagen-container {
+    width: 200px;   /* Vuelve a 200px de ancho */
+    height: 200px;  /* Vuelve a 200px de alto */
+    margin: 0 auto 15px auto; /* Vuelve al margen original */
+    overflow: hidden;
+    border-radius: 15px; /* Vuelve al border-radius original */
+    background-color: #334155;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.imagen-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.sin-imagen {
+    color: #94a3b8;
+    font-size: 1rem; /* Vuelve al tamaño original */
+    text-align: center;
+}
+
+.brand-logo {
+    width: 80px;   /* Vuelve a 80px */
+    height: 80px;  /* Vuelve a 80px */
+    background: linear-gradient(45deg, #22c55e, #16a34a);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1rem; /* Vuelve al margen original */
+    font-size: 2rem; /* Vuelve al tamaño original */
+    font-weight: bold;
+    color: white;
+}
+
+.producto-card h3 {
+    font-size: 1.5rem; /* Vuelve al tamaño original */
+    margin-bottom: 1rem; /* Vuelve al margen original */
+    color: #ffffff;
+    line-height: 1.2; /* Ajuste de línea */
+}
+
+.origen {
+    display: inline-block;
+    background: rgba(34, 197, 94, 0.2);
+    color: #22c55e;
+    padding: 0.3rem 0.8rem; /* Vuelve al padding original */
+    border-radius: 15px; /* Vuelve al border-radius original */
+    font-size: 0.8rem; /* Vuelve al tamaño original */
+    font-weight: 500;
+    margin-bottom: 1rem; /* Vuelve al margen original */
+}
+
+.intensidad {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem; /* Vuelve al espaciado original */
+    margin-bottom: 1rem; /* Vuelve al margen original */
+}
+
+.intensidad-label {
+    color: #94a3b8;
+    font-size: 0.9rem; /* Vuelve al tamaño original */
+}
+
+.intensidad-barras {
+    display: flex;
+    gap: 2px; /* Vuelve al espaciado original */
+}
+
+.barra {
+    width: 8px; /* Vuelve al tamaño original */
+    height: 20px; /* Vuelve al tamaño original */
+    background: rgba(34, 197, 94, 0.3);
+    border-radius: 2px;
+}
+
+.barra.activa {
+    background: linear-gradient(to top, #22c55e, #16a34a);
+}
+
+.producto-card p {
+    color: #94a3b8;
+    margin-bottom: 1.5rem; /* Vuelve al margen original */
+    line-height: 1.6; /* Vuelve al line-height original */
+    font-size: 0.95rem; /* Vuelve al tamaño original (o similar si no estaba fijo) */
+    height: auto; /* Permite que la altura se ajuste al contenido */
+    overflow: visible; /* Muestra todo el contenido */
+    text-overflow: clip; /* No añade puntos suspensivos */
+    display: block; /* Vuelve a ser un bloque normal */
+    -webkit-line-clamp: unset; /* Desactiva la limitación de líneas */
+}
+
+.precio {
+    font-size: 1.8rem; /* Vuelve al tamaño original */
+    font-weight: bold;
+    color: #22c55e;
+    margin-bottom: 1rem;
+}
+
+/* ACCIONES (Botones en tarjetas de producto) */
+.acciones {
+    display: flex;
+    justify-content: center;
+    gap: 10px; /* Vuelve al espaciado original */
+    margin-top: 10px; /* Vuelve al margen original */
+}
+
+.btn-editar, .btn-eliminar, .btn-carrito {
+    padding: 0.6rem 1rem; /* Vuelve a padding original */
+    border-radius: 8px;
+    font-weight: bold;
+    border: none;
+    cursor: pointer;
+    font-size: 1rem; /* Vuelve a tamaño original */
+    min-width: 90px; /* Vuelve a min-width original */
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 6px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    color: white;
+}
+
+.btn-editar {
+    background-color: #16a34a;
+}
+.btn-editar:hover {
+    background-color: #22c55e;
+    transform: translateY(-2px); /* Vuelve al desplazamiento original */
+}
+
+.btn-eliminar {
+    background-color: #dc2626;
+}
+.btn-eliminar:hover {
+    background-color: #f87171;
+    transform: translateY(-2px); /* Vuelve al desplazamiento original */
+}
+
+.btn-carrito {
+    background-color: #2563eb;
+}
+.btn-carrito:hover {
+    background-color: #3b82f6;
+    transform: translateY(-2px); /* Vuelve al desplazamiento original */
+}
+
+/* FOOTER */
+.footer {
+    background-color: #0f172a;
+    color: #94a3b8;
+    padding: 2rem;
+    text-align: center;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    margin-top: auto;
+}
+
+.footer a {
+    color: #22c55e;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.footer a:hover {
+    text-decoration: underline;
+}
+
+.footer-container {
+    max-width: 1000px;
+    margin: 0 auto;
+    font-size: 0.95rem;
+    line-height: 1.6;
+}
+
+.footer-logo {
+    font-weight: bold;
+    font-size: 1.2rem;
+    color: #22c55e;
+    margin-bottom: 10px;
+}
+
+.footer-redes {
+    margin-top: 1rem;
+    display: flex;
+    justify-content: center;
+    gap: 1.2rem;
+}
+
+.footer-redes img {
+    width: 32px;
+    height: 32px;
+    filter: brightness(0) invert(1);
+    transition: transform 0.3s ease, filter 0.3s ease;
+}
+
+.footer-redes img:hover {
+    transform: scale(1.15);
+    filter: brightness(1) invert(0) sepia(1) saturate(10) hue-rotate(90deg);
+}
+
+/* Estilos para Formularios (Agregar/Editar Producto, Login, Registro) */
+.form-card {
+    background-color: rgba(255, 255, 255, 0.05);
+    border: 2px solid rgba(34, 197, 94, 0.3);
+    padding: 3rem;
+    border-radius: 20px;
+    max-width: 700px;
+    width: 100%;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(8px);
+    margin: 2rem auto;
+}
+
+.form-card h2 {
+    text-align: center;
+    color: #22c55e;
+    font-size: 2rem;
+    margin-bottom: 2rem;
+}
+
+.form-group {
+    margin-bottom: 1.8rem;
+    display: flex;
+    flex-direction: column;
+}
+
+.form-card label {
+    font-weight: 600;
+    margin-bottom: 0.6rem;
+    color: #f1f5f9;
+    font-size: 1.1rem;
+}
+
+.form-card input[type="text"],
+.form-card input[type="email"],
+.form-card input[type="password"],
+.form-card input[type="number"],
+.form-card textarea,
+.form-card select {
+    padding: 14px 18px;
+    font-size: 1rem;
+    border-radius: 12px;
+    border: none;
+    background-color: #1e293b;
+    color: #f1f5f9;
+    font-family: inherit;
+    box-shadow: inset 0 0 6px rgba(0,0,0,0.6);
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.form-card input[type="checkbox"] {
+    width: auto;
+    margin-right: 10px;
+}
+
+.form-card .checkbox-label {
+    display: flex;
+    align-items: center;
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+.form-card input[type="submit"] {
+    background-color: #22c55e;
+    color: #1e293b;
+    font-weight: bold;
+    border: none;
+    padding: 1rem;
+    border-radius: 12px;
+    font-size: 1.2rem;
+    width: 100%;
+    margin-top: 2rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.form-card input[type="submit"]:hover {
+    background-color: #16a34a;
+}
+
+.error {
+    color: #f87171;
+    text-align: center;
+    margin-bottom: 1.5rem;
+    font-weight: bold;
+    background-color: rgba(248, 113, 129, 0.2);
+    padding: 10px;
+    border-radius: 8px;
+}
+.success {
+    color: #22c55e;
+    margin-bottom: 1.5rem;
+    font-weight: bold;
+    background-color: rgba(34, 197, 94, 0.2);
+    padding: 10px;
+    border-radius: 8px;
+}
+
+.login-link, .register-link {
+    margin-top: 1.5rem;
+    font-size: 1rem;
+    color: #f1f5f9;
+    text-align: center;
+}
+
+.login-link a, .register-link a {
+    color: #22c55e;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.login-link a:hover, .register-link a:hover {
+    text-decoration: underline;
+}
+
+/* Estilos para Carrito */
+.carrito-container {
+    max-width: 900px;
+    margin: 2rem auto 4rem;
+    padding: 2rem;
+    background: rgba(30, 41, 59, 0.9);
+    border-radius: 15px;
+    color: #f1f5f9;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
+
+.carrito-container table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1rem;
+}
+
+.carrito-container th, .carrito-container td {
+    padding: 14px 16px;
+    text-align: center;
+}
+
+.carrito-container th {
+    background-color: #22c55e;
+    color: #1e293b;
+}
+
+.carrito-container tbody tr {
+    background-color: #1e293b;
+    border-bottom: 2px solid white;
+}
+
+.carrito-container tbody tr:last-child {
+    border-bottom: none;
+}
+
+.carrito-container .btn-eliminar, .carrito-container .btn-eliminar-unidad {
+    padding: 0.4rem 0.8rem;
+    border-radius: 8px;
+    font-weight: bold;
+    border: none;
+    cursor: pointer;
+    font-size: 0.9rem;
+    color: white;
+    background-color: #dc2626;
+    margin: 0 3px;
+    transition: background-color 0.3s ease;
+}
+
+.carrito-container .btn-eliminar:hover, .carrito-container .btn-eliminar-unidad:hover {
+    background-color: #b91c1c;
+}
+
+.payment-section {
+    margin-top: 2rem;
+    padding: 2rem;
+    background: rgba(34, 197, 94, 0.1);
+    border-radius: 15px;
+    border: 2px solid #22c55e;
+    text-align: center;
+}
+
+.payment-section h3 {
+    color: #22c55e;
+    margin-bottom: 1rem;
+    font-size: 1.5rem;
+}
+
+.total-payment {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #22c55e;
+    margin-bottom: 1.5rem;
+}
+
+.btn-pagar {
+    background: linear-gradient(45deg, #22c55e, #16a34a);
+    color: white;
+    border: none;
+    padding: 1rem 2rem;
+    font-size: 1.2rem;
+    font-weight: bold;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    display: inline-block;
+    box-shadow: 0 4px 15px rgba(34, 197, 94, 0.3);
+}
+
+.btn-pagar:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(34, 197, 94, 0.4);
+    background: linear-gradient(45deg, #16a34a, #15803d);
+}
+
+.btn-pagar:active {
+    transform: translateY(0);
+}
+
+/* Estilos de Pagos (mp.php y tarjeta.php) */
+.payment-page-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    gap: 2rem;
+    padding: 2rem;
+    flex-wrap: wrap;
+}
+
+.payment-page-section {
+    flex: 1;
+    background: white;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    height: fit-content;
+    color: #333;
+}
+
+.summary-section-payment {
+    width: 350px;
+    background: white;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    height: fit-content;
+    color: #333;
+}
+
+@media (max-width: 768px) {
+    .payment-page-container {
+        flex-direction: column;
+        padding: 1rem;
+    }
+    .summary-section-payment {
+        width: 100%;
+        order: -1;
+    }
+}
+
+.payment-page-section .payment-title, .summary-section-payment .payment-title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+    color: #000;
+}
+
+.payment-subtitle {
+    font-size: 1rem;
+    color: #666;
+    margin-bottom: 1.5rem;
+}
+
+.method-group {
+    border-bottom: 1px solid #e5e5e5;
+    padding-bottom: 1rem;
+    margin-bottom: 1rem;
+}
+
+.method-group:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+}
+
+.group-title {
+    font-size: 0.9rem;
+    color: #666;
+    margin-bottom: 1rem;
+    font-weight: 500;
+}
+
+.payment-option {
+    display: flex;
+    align-items: center;
+    padding: 1rem;
+    border: 1px solid #e5e5e5;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    margin-bottom: 0.5rem;
+    text-decoration: none;
+    color: inherit;
+}
+
+.payment-option:hover {
+    border-color: #0066cc;
+    background-color: #f8f9fa;
+}
+
+.payment-option:last-child {
+    margin-bottom: 0;
+}
+
+.payment-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: #0066cc;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 1rem;
+    font-weight: bold;
+    color: white;
+}
+
+.payment-icon.card {
+    background: #2d3436;
+}
+
+.payment-icon.cash {
+    background: #00b894;
+}
+
+.payment-details {
+    flex: 1;
+}
+
+.payment-name {
+    font-size: 1rem;
+    font-weight: 500;
+    color: #000;
+    margin-bottom: 0.25rem;
+}
+
+.payment-desc {
+    font-size: 0.9rem;
+    color: #666;
+}
+
+.payment-arrow {
+    color: #666;
+    font-size: 1.2rem;
+}
+
+.company-info {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1.5rem;
+}
+
+.company-info .logo {
+    margin-right: 1rem;
+}
+
+.company-info .logo img {
+    width: 40px;
+    height: 40px;
+    object-fit: contain;
+    border-radius: 4px;
+}
+
+.company-name {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #000;
+}
+
+.purchase-details {
+    margin-bottom: 2rem;
+}
+
+.details-title {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #000;
+    margin-bottom: 1rem;
+}
+
+.purchase-item {
+    font-size: 0.9rem;
+    color: #666;
+    margin-bottom: 0.5rem;
+}
+
+.total-amount {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #000;
+    text-align: right;
+}
+
+.back-link {
+    display: inline-flex;
+    align-items: center;
+    color: #0066cc;
+    text-decoration: none;
+    font-size: 0.9rem;
+    margin-top: 1rem;
+    padding: 0.5rem 0;
+}
+
+.back-link:hover {
+    text-decoration: underline;
+}
+
+.back-arrow {
+    margin-right: 0.5rem;
+}
+
+.footer-text {
+    font-size: 0.8rem;
+    color: #999;
+    text-align: center;
+    margin-top: 2rem;
+    padding-top: 2rem;
+    border-top: 1px solid #e5e5e5;
+}
+
+/* Formulario de tarjeta */
+.form-row {
+    display: flex;
+    gap: 1rem;
+}
+
+.form-row .form-group {
+    flex: 1;
+}
+
+.card-icons {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: 0.5rem;
+}
+
+.card-icon {
+    width: 30px;
+    height: 20px;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.7rem;
+    font-weight: bold;
+    color: white;
+}
+
+.visa { background: #1A1F71; }
+.mastercard { background: #EB001B; }
+.amex { background: #006FCF; }
+
+.installments-section {
+    margin-top: 2rem;
+    padding-top: 2rem;
+    border-top: 1px solid #e5e5e5;
+}
+
+.installments-title {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #000;
+    margin-bottom: 1rem;
+}
+
+.installment-option {
+    display: flex;
+    align-items: center;
+    padding: 1rem;
+    border: 1px solid #e5e5e5;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    margin-bottom: 0.5rem;
+}
+
+.installment-option:hover {
+    border-color: #0066cc;
+    background-color: #f8f9fa;
+}
+
+.installment-option input[type="radio"] {
+    margin-right: 1rem;
+}
+
+.installment-details {
+    flex: 1;
+}
+
+.installment-text {
+    font-size: 0.9rem;
+    color: #333;
+}
+
+.installment-amount {
+    font-size: 0.8rem;
+    color: #666;
+    margin-top: 0.25rem;
+}
+
+.pay-button {
+    width: 100%;
+    padding: 1rem;
+    background: #00a650;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    margin-top: 2rem;
+}
+
+.pay-button:hover {
+    background: #008f44;
+}
+
+.security-info {
+    display: flex;
+    align-items: center;
+    font-size: 0.8rem;
+    color: #666;
+    margin-top: 1rem;
+}
+
+.security-icon {
+    margin-right: 0.5rem;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .nav-links {
+        gap: 1rem;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+    .nav-links a {
+        padding: 0.3rem 0.5rem;
+        font-size: 1rem;
+    }
+    .logo {
+        font-size: 1.5rem;
+    }
+    .logo img {
+        height: 30px;
+    }
+    .productos-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+    .producto-card {
+        padding: 1rem;
+        max-width: none;
+    }
+    .imagen-container {
+        width: 150px; /* Ajuste para móviles, se mantiene más grande */
+        height: 150px; /* Ajuste para móviles, se mantiene más grande */
+    }
+    .brand-logo {
+        width: 60px;
+        height: 60px;
+        font-size: 1.1rem;
+    }
+    .producto-card h3 {
+        font-size: 1.2rem;
+    }
+    .precio {
+        font-size: 1.4rem;
+    }
+    .btn-editar, .btn-eliminar, .btn-carrito {
+        padding: 0.4rem 0.6rem;
+        font-size: 0.8rem;
+        min-width: 70px;
+    }
+    .form-card {
+        padding: 2rem 1rem;
+    }
+}
+
+/* Responsive para pantallas medianas (ej. tablets) */
+@media (min-width: 769px) and (max-width: 1024px) {
+    .productos-grid {
+        grid-template-columns: repeat(2, 1fr); /* 2 columnas en tablets */
+        gap: 1.8rem;
+    }
+    .nav-links {
+        gap: 1.5rem;
+    }
+}
+
+/* Responsive para pantallas grandes */
+@media (min-width: 1025px) {
+    .productos-grid {
+        grid-template-columns: repeat(3, 1fr); /* 3 columnas por defecto en grandes */
+    }
+}
+@media (min-width: 1200px) {
+    .productos-grid {
+        grid-template-columns: repeat(4, 1fr); /* 4 columnas para pantallas muy grandes */
+    }
+}
