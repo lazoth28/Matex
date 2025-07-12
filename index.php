@@ -1,234 +1,322 @@
 <?php
-require 'conexion.php';
-
+// Siempre iniciar sesión al principio de cualquier archivo que la necesite
 if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
-
-$stmt = $pdo->prepare("SELECT * FROM productos WHERE destacado = 1 ORDER BY categoria_id, id DESC");
-$stmt->execute();
-$productos = $stmt->fetchAll();
-
-$categorias = [
-    1 => 'Mates',
-    2 => 'Yerbas',
-    3 => 'Bombillas',
-    4 => 'Termos',
-    5 => 'Accesorios',
-];
-
-$agrupados = [];
-foreach ($productos as $prod) {
-    $agrupados[$prod['categoria_id']][] = $prod;
-}
-
-$page_title = "Inicio - Matex";
-include 'header.php'; // Incluye el header
 ?>
-    <title><?= $page_title ?></title>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="styles.css" />
     <style>
-        .carousel-container {
+        /* Estilos específicos del header que pueden ser sobrescritos o movidos a styles.css si son comunes */
+        header {
+            background: rgba(15, 23, 42, 0.9);
+            backdrop-filter: blur(10px);
+            padding: 1.2rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        nav {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+            gap: 2rem;
+        }
+
+        /* Contenedor para logo y dropdown */
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            flex-shrink: 0;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: bold;
+            font-size: 1.8rem;
+            background: linear-gradient(45deg, #22c55e, #16a34a);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            cursor: pointer;
+        }
+
+        .logo img {
+            height: 40px;
+            width: auto;
+            border-radius: 8px;
+        }
+
+        /* Estilos del buscador */
+        .search-container {
+            display: flex;
+            align-items: center;
+            flex-grow: 1;
+            max-width: 400px;
+            margin: 0 2rem;
+        }
+
+        .search-box {
             position: relative;
             width: 100%;
-            height: 400px;
-            overflow: hidden;
-            border-radius: 0px;
-            margin-bottom: 2rem;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
         }
-        
-        .carousel-slide {
-            position: absolute;
+
+        .search-input {
             width: 100%;
-            height: 100%;
-            opacity: 0%;
-            transition: opacity 0.5s ease-in-out;
-            background-size: cover;
-            background-position: center;
+            padding: 0.8rem 1rem;
+            padding-right: 3rem;
+            border: 2px solid #374151;
+            border-radius: 25px;
+            background: rgba(255, 255, 255, 0.1);
+            color: #ffffff;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            outline: none;
+        }
+
+        .search-input::placeholder {
+            color: #9ca3af;
+        }
+
+        .search-input:focus {
+            border-color: #22c55e;
+            background: rgba(255, 255, 255, 0.15);
+            box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.2);
+        }
+
+        .search-btn {
+            position: absolute;
+            right: 8px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: #22c55e;
+            border: none;
+            border-radius: 50%;
+            width: 35px;
+            height: 35px;
+            cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
-            color: white;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.7);
+            transition: all 0.3s ease;
         }
-        
-        .carousel-slide.active {
-            opacity: 5;
+
+        .search-btn:hover {
+            background: #16a34a;
+            transform: translateY(-50%) scale(1.1);
         }
-        
-        .carousel-slide h2 {
-            font-size: 2.5rem;
-            margin: 0;
-            text-align: center;
-            background: rgba(0,0,0,0.5);
-            padding: 1rem 2rem;
-            border-radius: 10px;
+
+        .search-btn svg {
+            width: 18px;
+            height: 18px;
+            fill: white;
         }
-        
-        .carousel-nav {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            background: rgba(0,0,0,0.5);
+
+        /* Dropdown de categorías */
+        .category-dropdown {
+            position: relative;
+        }
+
+        .category-btn {
+            background: linear-gradient(45deg, #22c55e, #16a34a);
             color: white;
             border: none;
-            padding: 1rem;
+            padding: 0.8rem 1.5rem;
+            border-radius: 25px;
+            font-size: 1rem;
             cursor: pointer;
-            font-size: 1.5rem;
-            border-radius: 50%;
-            transition: background 0.3s ease;
-        }
-        
-        .carousel-nav:hover {
-            background: rgba(0,0,0,0.7);
-        }
-        
-        .carousel-nav.prev {
-            left: 5px;
-        }
-        
-        .carousel-nav.next {
-            right: 5px;
-        }
-        
-        .carousel-indicators {
-            position: absolute;
-            bottom: 20px;
-            left: 50%;
-            transform: translateX(-50%);
+            transition: all 0.3s ease;
             display: flex;
-            gap: 10px;
+            align-items: center;
+            gap: 0.5rem;
         }
-        
-        .carousel-indicator {
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-            background: rgba(255,255,255,0.5);
-            cursor: pointer;
-            transition: background 0.3s ease;
+
+        .category-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(34, 197, 94, 0.3);
         }
-        
-        .carousel-indicator.active {
-            background: white;
+
+        .category-dropdown-content {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background: rgba(15, 23, 42, 0.95);
+            backdrop-filter: blur(10px);
+            border: 1px solid #374151;
+            border-radius: 10px;
+            min-width: 200px;
+            z-index: 1001;
+            margin-top: 0.5rem;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
         }
-        
+
+        .category-dropdown-content.show {
+            display: block;
+        }
+
+        .category-dropdown-content a {
+            color: #ffffff;
+            padding: 0.8rem 1.2rem;
+            text-decoration: none;
+            display: block;
+            transition: all 0.3s ease;
+        }
+
+        .category-dropdown-content a:hover {
+            background: rgba(34, 197, 94, 0.2);
+            color: #22c55e;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+            align-items: center;
+            flex-shrink: 0;
+        }
+
+        .nav-links a {
+            color: #ffffff;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            font-size: 1.1rem;
+            padding: 0.5rem 0;
+            position: relative;
+        }
+
+        .nav-links a:hover {
+            color: #22c55e;
+            transform: translateY(-2px);
+        }
+
+        .nav-links a.active {
+            color: #22c55e;
+            font-weight: bold;
+        }
+
+        /* Estilos para el usuario logueado en el nav */
+        .user-info {
+            color: #f1f5f9;
+            font-size: 1.1rem;
+            margin-right: 1rem;
+            font-weight: 500;
+        }
+
+        /* Responsive */
         @media (max-width: 768px) {
-            .carousel-container {
-                height: 300px;
+            nav {
+                flex-direction: column;
+                gap: 1rem;
+                padding: 0 1rem;
             }
-            
-            .carousel-slide h2 {
-                font-size: 1.8rem;
-                padding: 0.5rem 1rem;
+
+            .logo-container {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+
+            .search-container {
+                margin: 0;
+                max-width: none;
+                width: 100%;
+            }
+
+            .nav-links {
+                gap: 1rem;
+                flex-wrap: wrap;
+                justify-content: center;
             }
         }
     </style>
 </head>
 <body>
-    <!-- Carrusel -->
-    <section class="carousel-container">
-        <div class="carousel-slide active" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('https://imgs.search.brave.com/XVPH4jNWGkMdne2TIwNK-5yReQwO5_X8RENUBkY6PuU/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9tYXRl/c2Zsb3JpZGEuY29t/L2Nkbi9zaG9wL2Zp/bGVzL01hdGVzRmxv/cmlkYS03MTEuanBn/P3Y9MTcyMzQ5ODc2/MyZ3aWR0aD01MzM');">
-            <h2>Los Mejores Mates Artesanales 🧉</h2>
-        </div>
-        
-        <div class="carousel-slide" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('https://imgs.search.brave.com/SjfOcJWgjA52JuwLFsua-BmfDV4xJVLBxT_uwCcPFZI/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9pbnlt/Lm9yZy5hci9pbWFn/ZW5lcy9hcmNoaXZv/cy9ub3RpY2lhcy84/MDYwNl9pbWFnZW5f/MTA4OHg2NTB4cmVj/b3J0YXJ4YWdyYW5k/YXIuanBnP3JhbmRv/bT0xNzQzMTczODk3');">
-            <h2>Yerbas Premium Seleccionadas 🌿</h2>
-        </div>
-        
-        <div class="carousel-slide" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('https://images.unsplash.com/photo-1558618666-fcd25c85cd64?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1200&q=80');">
-            <h2>Accesorios para el Mate Perfecto ✨</h2>
-        </div>
-        
-        <button class="carousel-nav prev" onclick="changeSlide(-1)">❮</button>
-        <button class="carousel-nav next" onclick="changeSlide(1)">❯</button>
-        
-        <div class="carousel-indicators">
-            <span class="carousel-indicator active" onclick="goToSlide(0)"></span>
-            <span class="carousel-indicator" onclick="goToSlide(1)"></span>
-            <span class="carousel-indicator" onclick="goToSlide(2)"></span>
-        </div>
-    </section>
+    <header>
+        <nav>
+            <!-- Contenedor para logo y dropdown -->
+            <div class="logo-container">
+                <div class="logo">
+                    <img src="img-MATEX.png" alt="Logo Matex" />
+                    Matex
+                </div>
+                
+                <!-- Dropdown de categorías pegado al logo -->
+                <div class="category-dropdown">
+                    <button class="category-btn" onclick="toggleDropdown()">
+                        Categorías
+                        <svg width="12" height="12" viewBox="0 0 12 12" fill="currentColor">
+                            <path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </button>
+                    <div class="category-dropdown-content" id="categoryDropdown">
+                        <a href="mates.php">🧉 Mates</a>
+                        <a href="yerbas.php">🌿 Yerbas</a>
+                        <a href="bombillas.php">🥤 Bombillas</a>
+                        <a href="termos.php">🍶 Termos</a>
+                        <a href="accesorios.php">🎯 Accesorios</a>
+                    </div>
+                </div>
+            </div>
+
+            <ul class="nav-links">
+                <li><a href="index.php" class="<?= (basename($_SERVER['PHP_SELF']) == 'index.php') ? 'active' : '' ?>">Inicio</a></li>
+                
+                <?php if (isset($_SESSION['rol']) && ($_SESSION['rol'] == 'administrador' || $_SESSION['rol'] == 'jefe')): ?>
+                    <li><a href="agregar_producto.php" class="<?= (basename($_SERVER['PHP_SELF']) == 'agregar_producto.php') ? 'active' : '' ?>">Agregar Producto</a></li>
+                <?php endif; ?>
+
+                <?php if (isset($_SESSION['rol']) && $_SESSION['rol'] == 'jefe'): ?>
+                    <li><a href="admin_usuarios.php" class="<?= (basename($_SERVER['PHP_SELF']) == 'admin_usuarios.php') ? 'active' : '' ?>">Admin Usuarios</a></li>
+                <?php endif; ?>
+
+                <li><a href="carrito.php" class="<?= (basename($_SERVER['PHP_SELF']) == 'carrito.php') ? 'active' : '' ?>">Carrito 🛒</a></li>
+
+                <?php if (isset($_SESSION['user_id'])): ?>
+                    <li class="user-info">Hola, <?= htmlspecialchars($_SESSION['username']) ?>!</li>
+                    <li><a href="logout.php">Cerrar Sesión</a></li>
+                <?php else: ?>
+                    <li><a href="login.php" class="<?= (basename($_SERVER['PHP_SELF']) == 'login.php') ? 'active' : '' ?>">Inicio</a></li>
+                    <li><a href="registro.php" class="<?= (basename($_SERVER['PHP_SELF']) == 'registro.php') ? 'active' : '' ?>">Registro</a></li>
+                <?php endif; ?>
+            </ul>
+        </nav>
+    </header>
 
     <script>
-        let currentSlide = 0;
-        const slides = document.querySelectorAll('.carousel-slide');
-        const indicators = document.querySelectorAll('.carousel-indicator');
-        const totalSlides = slides.length;
-        
-        function showSlide(index) {
-            slides.forEach(slide => slide.classList.remove('active'));
-            indicators.forEach(indicator => indicator.classList.remove('active'));
-            
-            slides[index].classList.add('active');
-            indicators[index].classList.add('active');
+        function toggleDropdown() {
+            const dropdown = document.getElementById('categoryDropdown');
+            dropdown.classList.toggle('show');
         }
-        
-        function changeSlide(direction) {
-            currentSlide += direction;
-            
-            if (currentSlide >= totalSlides) {
-                currentSlide = 0;
-            } else if (currentSlide < 0) {
-                currentSlide = totalSlides - 1;
+
+        // Cerrar dropdown cuando se hace clic fuera
+        window.onclick = function(event) {
+            if (!event.target.matches('.category-btn')) {
+                const dropdown = document.getElementById('categoryDropdown');
+                if (dropdown.classList.contains('show')) {
+                    dropdown.classList.remove('show');
+                }
             }
-            
-            showSlide(currentSlide);
         }
-        
-        function goToSlide(index) {
-            currentSlide = index;
-            showSlide(currentSlide);
-        }
-        
-        // Auto-advance carousel every 5 seconds
-        setInterval(() => {
-            changeSlide(1);
-        }, 5000);
+
+        // Mejorar UX del buscador
+        document.querySelector('.search-input').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                this.closest('form').submit();
+            }
+        });
     </script>
 
-    <section class="hero-section" style="text-align:center; padding: 2rem;">
-        <h2>¡Capo, bienvenido a MATEX! 🧉</h2>
-        <br>
-        <p style="text-align: center;">
-            <h3>Estamos re agradecidos y nos alegra un montón que seas parte de nuestra comunidad matera.
-            Acá vas a encontrar todo lo necesario para que tengas una excelente cebada: desde los mejores mates artesanales y nuestra selecta colección de yerbas 🌿, hasta bombillas, termos y accesorios top que van a hacer que tus mates sean los mejores de todos.
-            ¡Así que preparate la pava, hacete tu montañita y arrancá una buena cebada de mate con MATEX!
-        </p></h3>
-    </section>
+    <main> 
 
-    <?php foreach ($categorias as $id => $nombreCategoria): ?>
-        <?php if (!empty($agrupados[$id])): ?>
-            <section class="productos-container">
-                <h2><?= htmlspecialchars($nombreCategoria) ?> destacados</h2>
-                <div class="productos-grid">
-                    <?php foreach ($agrupados[$id] as $producto): ?>
-                        <div class="producto-card">
-                            <div class="imagen-container">
-                                <?php if ($producto['imagen']): ?>
-                                    <img src="<?= htmlspecialchars($producto['imagen']) ?>" alt="<?= htmlspecialchars($producto['nombre']) ?>">
-                                <?php else: ?>
-                                    <div class="sin-imagen">Sin imagen</div>
-                                <?php endif; ?>
-                            </div>
-                            <div class="brand-logo"><?= strtoupper(substr($producto['nombre'], 0, 1)) ?></div>
-                            <h3><?= htmlspecialchars($producto['nombre']) ?></h3>
-                            <div class="origen"><?= htmlspecialchars($producto['origen']) ?></div>
-                            <div class="intensidad">
-                                <span class="intensidad-label">Durabilidad:</span>
-                                <div class="intensidad-barras">
-                                    <?php for ($i = 1; $i <= 5; $i++): ?>
-                                        <div class="barra <?= $i <= $producto['durabilidad'] ? 'activa' : '' ?>"></div>
-                                    <?php endfor; ?>
-                                </div>
-                            </div>
-                            <p><?= htmlspecialchars($producto['descripcion']) ?></p>
-                            <div class="precio">$<?= number_format($producto['precio'], 2, ',', '.') ?></div>
-                        </div>
-                    <?php endforeach; ?>
-                </div>
-            </section>
-        <?php endif; ?>
-    <?php endforeach; ?>
-
-<?php include 'footer.php'; ?>
+</body>
+</html>
