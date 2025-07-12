@@ -278,7 +278,7 @@
             </div>
         </div>
 
-        <a href="#" class="back-link">← Volver al inicio</a>
+        <a href="index.php" class="back-link">← Volver al inicio</a>
     </div>
 </body>
 </html>
