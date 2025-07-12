@@ -58,7 +58,7 @@
         <div class="footer-bottom">
             <p>&copy; <?= date('Y') ?> Matex. Todos los derechos reservados.</p>
             <div class="footer-bottom-links">
-                <a href="#">Términos y Condiciones</a>
+                <a href="terminos.php">Términos y Condiciones</a>
                 <a href="#">Política de Privacidad</a>
                 <a href="#">Envíos</a>
             </div>
