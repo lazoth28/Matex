@@ -183,7 +183,6 @@ include 'header.php';
                 </div>
                 <input type="submit" value="Registrarse">
             </form>
-            <p class="login-link">¿Ya tienes cuenta? <a href="login.php">Inicia Sesión aquí</a></p>
         </div>
     </main>
 
