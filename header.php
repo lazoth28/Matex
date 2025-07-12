@@ -257,23 +257,6 @@ if (session_status() == PHP_SESSION_NONE) {
                 </div>
             </div>
 
-            <!-- Buscador -->
-            <div class="search-container">
-                <form class="search-box" action="buscar.php" method="GET">
-                    <input 
-                        type="text" 
-                        class="search-input" 
-                        name="q" 
-                        placeholder="Buscar mates, yerbas, bombillas..." 
-                        value="<?= isset($_GET['q']) ? htmlspecialchars($_GET['q']) : '' ?>"
-                    />
-                    <button type="submit" class="search-btn">
-                        <svg viewBox="0 0 24 24">
-                            <path d="M21 21l-4.35-4.35M17 10a7 7 0 11-14 0 7 7 0 0114 0z" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
-                        </svg>
-                    </button>
-                </form>
-            </div>
 
             <ul class="nav-links">
                 <li><a href="index.php" class="<?= (basename($_SERVER['PHP_SELF']) == 'index.php') ? 'active' : '' ?>">Inicio</a></li>
@@ -292,7 +275,7 @@ if (session_status() == PHP_SESSION_NONE) {
                     <li class="user-info">Hola, <?= htmlspecialchars($_SESSION['username']) ?>!</li>
                     <li><a href="logout.php">Cerrar Sesión</a></li>
                 <?php else: ?>
-                    <li><a href="login.php" class="<?= (basename($_SERVER['PHP_SELF']) == 'login.php') ? 'active' : '' ?>">Login</a></li>
+                    <li><a href="login.php" class="<?= (basename($_SERVER['PHP_SELF']) == 'login.php') ? 'active' : '' ?>">Inicio</a></li>
                     <li><a href="registro.php" class="<?= (basename($_SERVER['PHP_SELF']) == 'registro.php') ? 'active' : '' ?>">Registro</a></li>
                 <?php endif; ?>
             </ul>
