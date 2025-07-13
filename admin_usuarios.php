@@ -227,7 +227,7 @@ include 'header.php'; // Incluye el header
                             <?php 
                             // No permitir que el propio jefe logueado se elimine a sí mismo
                             // No permitir que un jefe elimine a otro jefe sin una validación más compleja
-                            if ($usuario['id'] !== $_SESSION['user_id'] && $usuario['rol_nombre'] !== 'jefe'): 
+                            if ($usuario['id'] !== $_SESSION['user_id'] && $usuario['rol_nombre'] !== 'Jefe'): 
                             ?>
                                 <form action="eliminar_usuario.php" method="POST" onsubmit="return confirm('¿Estás seguro de que quieres eliminar a este usuario (<?= htmlspecialchars($usuario['nombre_usuario']) ?>)? Esta acción es irreversible.');">
                                     <input type="hidden" name="user_id" value="<?= $usuario['id'] ?>">
