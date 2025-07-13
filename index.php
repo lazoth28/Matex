@@ -30,7 +30,7 @@ include 'header.php'; // Incluye el header
         .carousel-container {
             position: relative;
             width: 100%;
-            height: 400px;
+            height: 600px;
             overflow: hidden;
             border-radius: 0px;
             margin-bottom: 2rem;
@@ -69,18 +69,17 @@ include 'header.php'; // Incluye el header
             position: absolute;
             top: 50%;
             transform: translateY(-50%);
-            background: rgba(0,0,0,0.5);
+            background: transparent;
             color: white;
             border: none;
             padding: 1rem;
             cursor: pointer;
             font-size: 1.5rem;
-            border-radius: 50%;
-            transition: background 0.3s ease;
+            transition: opacity 0.3s ease;
         }
         
         .carousel-nav:hover {
-            background: rgba(0,0,0,0.7);
+            opacity: 0.7;
         }
         
         .carousel-nav.prev {
@@ -89,28 +88,6 @@ include 'header.php'; // Incluye el header
         
         .carousel-nav.next {
             right: 5px;
-        }
-        
-        .carousel-indicators {
-            position: absolute;
-            bottom: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            display: flex;
-            gap: 10px;
-        }
-        
-        .carousel-indicator {
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-            background: rgba(255,255,255,0.5);
-            cursor: pointer;
-            transition: background 0.3s ease;
-        }
-        
-        .carousel-indicator.active {
-            background: white;
         }
         
         @media (max-width: 768px) {
@@ -142,26 +119,16 @@ include 'header.php'; // Incluye el header
         
         <button class="carousel-nav prev" onclick="changeSlide(-1)">❮</button>
         <button class="carousel-nav next" onclick="changeSlide(1)">❯</button>
-        
-        <div class="carousel-indicators">
-            <span class="carousel-indicator active" onclick="goToSlide(0)"></span>
-            <span class="carousel-indicator" onclick="goToSlide(1)"></span>
-            <span class="carousel-indicator" onclick="goToSlide(2)"></span>
-        </div>
     </section>
 
     <script>
         let currentSlide = 0;
         const slides = document.querySelectorAll('.carousel-slide');
-        const indicators = document.querySelectorAll('.carousel-indicator');
         const totalSlides = slides.length;
         
         function showSlide(index) {
             slides.forEach(slide => slide.classList.remove('active'));
-            indicators.forEach(indicator => indicator.classList.remove('active'));
-            
             slides[index].classList.add('active');
-            indicators[index].classList.add('active');
         }
         
         function changeSlide(direction) {
@@ -184,7 +151,7 @@ include 'header.php'; // Incluye el header
         // Auto-advance carousel every 5 seconds
         setInterval(() => {
             changeSlide(1);
-        }, 5000);
+        }, 3000);
     </script>
 
     <section class="hero-section" style="text-align:center; padding: 2rem;">

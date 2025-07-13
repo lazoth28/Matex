@@ -207,7 +207,7 @@ include 'header.php';
                 <div class="total-payment">
                     Total a pagar: $<?= number_format($totalGeneral, 2, ',', '.') ?>
                 </div>
-                <a href="mp.php?total=<?= $totalGeneral ?>" class="btn-pagar">
+                <a href="https://www.mercadopago.com.ar/home#from-section=menu?total=<?= $totalGeneral ?>" class="btn-pagar">
                     💳 Pagar con MercadoPago
                 </a>
             </div>
