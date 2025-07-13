@@ -220,7 +220,6 @@ if (session_status() == PHP_SESSION_NONE) {
                     <li><a href="logout.php">Cerrar Sesión</a></li>
                 <?php else: ?>
                     <li><a href="login.php" class="<?= (basename($_SERVER['PHP_SELF']) == 'login.php') ? 'active' : '' ?>">Inicio Sesion</a></li>
-                    <li><a href="registro.php" class="<?= (basename($_SERVER['PHP_SELF']) == 'registro.php') ? 'active' : '' ?>">Registro</a></li>
                 <?php endif; ?>
             </ul>
         </nav>
