@@ -30,7 +30,7 @@ include 'header.php'; // Incluye el header
         .carousel-container {
             position: relative;
             width: 100%;
-            height: 600px;
+            height: 800px;
             overflow: hidden;
             border-radius: 0px;
             margin-bottom: 2rem;
@@ -88,6 +88,43 @@ include 'header.php'; // Incluye el header
         
         .carousel-nav.next {
             right: 5px;
+        }
+        
+        /* Estilo para productos clickeables */
+        .producto-card {
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+        }
+        
+        .producto-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+        
+        .producto-link {
+            text-decoration: none;
+            color: inherit;
+            display: block;
+        }
+        
+        .producto-link:hover {
+            text-decoration: none;
+            color: inherit;
+        }
+        
+        .acciones {
+            position: relative;
+            z-index: 10;
+        }
+        
+        .acciones form {
+            display: inline-block;
+        }
+        
+        .acciones button {
+            position: relative;
+            z-index: 11;
         }
         
         @media (max-width: 768px) {
@@ -171,26 +208,28 @@ include 'header.php'; // Incluye el header
                 <div class="productos-grid">
                     <?php foreach ($agrupados[$id] as $producto): ?>
                         <div class="producto-card">
-                            <div class="imagen-container">
-                                <?php if ($producto['imagen']): ?>
-                                    <img src="<?= htmlspecialchars($producto['imagen']) ?>" alt="<?= htmlspecialchars($producto['nombre']) ?>">
-                                <?php else: ?>
-                                    <div class="sin-imagen">Sin imagen</div>
-                                <?php endif; ?>
-                            </div>
-                            <div class="brand-logo"><?= strtoupper(substr($producto['nombre'], 0, 1)) ?></div>
-                            <h3><?= htmlspecialchars($producto['nombre']) ?></h3>
-                            <div class="origen"><?= htmlspecialchars($producto['origen']) ?></div>
-                            <div class="intensidad">
-                                <span class="intensidad-label">Durabilidad:</span>
-                                <div class="intensidad-barras">
-                                    <?php for ($i = 1; $i <= 5; $i++): ?>
-                                        <div class="barra <?= $i <= $producto['durabilidad'] ? 'activa' : '' ?>"></div>
-                                    <?php endfor; ?>
+                            <a href="producto_detalle.php?id=<?= $producto['id'] ?>" class="producto-link">
+                                <div class="imagen-container">
+                                    <?php if ($producto['imagen']): ?>
+                                        <img src="<?= htmlspecialchars($producto['imagen']) ?>" alt="<?= htmlspecialchars($producto['nombre']) ?>">
+                                    <?php else: ?>
+                                        <div class="sin-imagen">Sin imagen</div>
+                                    <?php endif; ?>
                                 </div>
-                            </div>
-                            <p><?= htmlspecialchars($producto['descripcion']) ?></p>
-                            <div class="precio">$<?= number_format($producto['precio'], 2, ',', '.') ?></div>
+                                <div class="brand-logo"><?= strtoupper(substr($producto['nombre'], 0, 1)) ?></div>
+                                <h3><?= htmlspecialchars($producto['nombre']) ?></h3>
+                                <div class="origen"><?= htmlspecialchars($producto['origen']) ?></div>
+                                <div class="intensidad">
+                                    <span class="intensidad-label">Durabilidad:</span>
+                                    <div class="intensidad-barras">
+                                        <?php for ($i = 1; $i <= 5; $i++): ?>
+                                            <div class="barra <?= $i <= $producto['durabilidad'] ? 'activa' : '' ?>"></div>
+                                        <?php endfor; ?>
+                                    </div>
+                                </div>
+                                <p><?= htmlspecialchars($producto['descripcion']) ?></p>
+                                <div class="precio">$<?= number_format($producto['precio'], 2, ',', '.') ?></div>
+                            </a>
                         </div>
                     <?php endforeach; ?>
                 </div>
