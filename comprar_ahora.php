@@ -50,7 +50,7 @@ include 'header.php';
     <title><?= $page_title ?></title>
     <style>
         .compra-container {
-            max-width: 800px;
+            max-width: 1000px;
             margin: 2rem auto;
             padding: 0 1rem;
         }
@@ -96,7 +96,7 @@ include 'header.php';
         .sin-imagen-compra {
             width: 120px;
             height: 120px;
-            background: #f0f0f0;
+            background: #27ae60;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -128,6 +128,11 @@ include 'header.php';
         .resumen-precios {
             border-top: 2px solid #eee;
             padding-top: 1rem;
+            color:rgb(255, 255, 255);
+             padding: 1rem;
+            background: #27ae60;
+            border-radius: 8px;
+            margin-bottom: 1rem;
         }
         
         .precio-linea {
@@ -141,10 +146,11 @@ include 'header.php';
             justify-content: space-between;
             font-size: 1.3rem;
             font-weight: bold;
-            color: #27ae60;
+            color:rgb(255, 255, 255);
             border-top: 1px solid #eee;
             padding-top: 1rem;
             margin-top: 1rem;
+
         }
         
         .formulario-compra {
@@ -211,6 +217,8 @@ include 'header.php';
             text-align: center;
             cursor: pointer;
             transition: all 0.3s ease;
+            background:rgba(39, 174, 95, 0.59);
+            color:rgb(255, 255, 255);
         }
         
         .metodo-opcion:hover {
@@ -289,11 +297,6 @@ include 'header.php';
 </head>
 <body>
     <div class="compra-container">
-        <div class="compra-header">
-            <h1>Finalizar Compra</h1>
-            <p>Estás a un paso de completar tu pedido</p>
-        </div>
-        
         <div class="producto-resumen">
             <div class="producto-info-compra">
                 <?php if ($producto['imagen']): ?>
@@ -408,7 +411,7 @@ include 'header.php';
             
             <div style="margin-top: 2rem;">
                 <a href="producto_detalle.php?id=<?= $producto['id'] ?>" class="btn-volver">← Volver al Producto</a>
-                <button type="submit" class="btn-finalizar"><a href="https://www.mercadopago.com.ar/home"></a>Finalizar Compra 💳</button>
+                <button type="submit" class="btn-finalizar"><a href="tarjeta.php"></a>Finalizar Compra 💳</button>
             </div>
         </form>
     </div>
