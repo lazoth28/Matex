@@ -180,7 +180,7 @@ if (session_status() == PHP_SESSION_NONE) {
             <!-- Contenedor para logo y dropdown -->
             <div class="logo-container">
                 <div class="logo">
-                    <img src="img-MATEX.png" alt="Logo Matex" />
+                    <img src="img-mate.png" alt="Logo Matex" />
                     Matex
                 </div>
                 
@@ -193,6 +193,7 @@ if (session_status() == PHP_SESSION_NONE) {
                         </svg>
                     </button>
                     <div class="category-dropdown-content" id="categoryDropdown">
+                        <a href="index.php">🏠 Inicio</a>
                         <a href="mates.php">🧉 Mates</a>
                         <a href="yerbas.php">🌿 Yerbas</a>
                         <a href="bombillas.php">🥤 Bombillas</a>
@@ -203,7 +204,6 @@ if (session_status() == PHP_SESSION_NONE) {
             </div>
 
             <ul class="nav-links">
-                <li><a href="index.php" class="<?= (basename($_SERVER['PHP_SELF']) == 'index.php') ? 'active' : '' ?>">Inicio</a></li>
                 
                 <?php if (isset($_SESSION['rol']) && ($_SESSION['rol'] == 'administrador' || $_SESSION['rol'] == 'jefe')): ?>
                     <li><a href="agregar_producto.php" class="<?= (basename($_SERVER['PHP_SELF']) == 'agregar_producto.php') ? 'active' : '' ?>">Agregar Producto</a></li>
@@ -216,8 +216,8 @@ if (session_status() == PHP_SESSION_NONE) {
                 <li><a href="carrito.php" class="<?= (basename($_SERVER['PHP_SELF']) == 'carrito.php') ? 'active' : '' ?>">Carrito 🛒</a></li>
 
                 <?php if (isset($_SESSION['user_id'])): ?>
-                    <li class="user-info">Hola, <?= htmlspecialchars($_SESSION['username']) ?>!</li>
                     <li><a href="logout.php">Cerrar Sesión</a></li>
+                    <li class="user-info">Hola, <?= htmlspecialchars($_SESSION['username']) ?>!</li>
                 <?php else: ?>
                     <li><a href="login.php" class="<?= (basename($_SERVER['PHP_SELF']) == 'login.php') ? 'active' : '' ?>">Inicio Sesion</a></li>
                 <?php endif; ?>

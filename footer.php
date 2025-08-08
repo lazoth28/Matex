@@ -8,7 +8,7 @@
             <!-- Logo y descripción -->
             <div class="footer-section">
                 <div class="footer-logo">
-                    <img src="img-MATEX.png" alt="Logo Matex" />
+                    <img src="img-mate.png" alt="Logo Matex" />
                     <h3>Matex</h3>
                 </div>
                 <p class="footer-description">
@@ -23,7 +23,7 @@
                 <div class="contact-info">
                     <p>📍 San Clemente del Tuyú, Buenos Aires</p>
                     <p>📞 +54 2252 45-6409</p>
-                    <p>✉️ info@matex.com.ar</p>
+                    <p>✉️ thiagolazojoaquin@gmail.com</p>
                 </div>
             </div>
 
@@ -39,11 +39,11 @@
                         <img src="img-whatsapp.png" alt="WhatsApp" class="social-icon">
                         WhatsApp
                     </a>
-                    <a href="https://www.tiktok.com/lazo_2804" target="_blank" rel="noopener noreferrer" class="social-link tiktok">
+                    <a href="https://www.tiktok.com/L4Z02804" target="_blank" rel="noopener noreferrer" class="social-link tiktok">
                         <img src="img-tiktok.png" alt="TikTok" class="social-icon">
                         TikTok
                     </a>
-                    <a href="https://www.facebook.com" target="_blank" rel="noopener noreferrer" class="social-link facebook">
+                    <a href="https://www.facebook.com/Thiago Lazo" target="_blank" rel="noopener noreferrer" class="social-link facebook">
                         <img src="img-facebook.webp" alt="Facebook" class="social-icon">
                         Facebook
                     </a>

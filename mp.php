@@ -298,7 +298,7 @@ include 'header.php';
         <div class="summary-section">
             <div class="company-info">
                 <div class="logo">
-                    <img src="img-MATEX.png" alt="MATEX Logo"/>
+                    <img src="img-mate.png" alt="MATEX Logo"/>
                 </div>
                 <div class="company-name">MATEX</div>
             </div>

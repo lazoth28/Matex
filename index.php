@@ -23,7 +23,7 @@ foreach ($productos as $prod) {
 }
 
 $page_title = "Inicio - Matex";
-include 'header.php'; // Incluye el header
+include 'header.php';
 ?>
     <title><?= $page_title ?></title>
     <style>
@@ -90,22 +90,32 @@ include 'header.php'; // Incluye el header
             right: 5px;
         }
         
-        /* Estilo para productos clickeables */
+        /* Estilo para productos clickeables - SIMPLIFICADO */
         .producto-card {
             cursor: pointer;
             transition: transform 0.3s ease, box-shadow 0.3s ease;
             position: relative;
+            background: white;
+            border-radius: 8px;
+            padding: 1rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            height: 400px; /* Altura fija más pequeña */
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
         }
         
         .producto-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+            transform: translateY(-3px);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
         }
         
         .producto-link {
             text-decoration: none;
             color: inherit;
-            display: block;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
         }
         
         .producto-link:hover {
@@ -113,18 +123,105 @@ include 'header.php'; // Incluye el header
             color: inherit;
         }
         
-        .acciones {
-            position: relative;
-            z-index: 10;
+        /* Imagen más pequeña */
+        .imagen-container {
+            width: 100%;
+            height: 300px;
+            overflow: hidden;
+            border-radius: 6px;
+            margin-bottom: 0.75rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #232F41;
         }
         
-        .acciones form {
-            display: inline-block;
+        .imagen-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
         }
         
-        .acciones button {
-            position: relative;
-            z-index: 11;
+        .sin-imagen {
+            color: #6c757d;
+            font-size: 0.9rem;
+            text-align: center;
+        }
+        
+        /* Información del producto simplificada */
+        .producto-info {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        
+        .producto-card h3 {
+            font-size: 1rem;
+            font-weight: 600;
+            margin: 0 0 0.5rem 0;
+            color: #2c3e50;
+            line-height: 1.2;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        
+        .origen {
+            font-size: 0.85rem;
+            color: #7f8c8d;
+            margin-bottom: 0.5rem;
+            font-style: italic;
+        }
+        
+        /* Durabilidad simplificada */
+        .intensidad {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 0.75rem;
+        }
+        
+        .intensidad-label {
+            font-size: 0.8rem;
+            color: #6c757d;
+            font-weight: 500;
+        }
+        
+        .intensidad-barras {
+            display: flex;
+            gap: 2px;
+        }
+        
+        .barra {
+            width: 12px;
+            height: 4px;
+            background-color: #232F41;
+            border-radius: 2px;
+        }
+        
+        .barra.activa {
+            background-color: #28a745;
+        }
+        
+        /* Precio destacado */
+        .precio {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #27ae60;
+            text-align: center;
+            margin-top: auto;
+            padding-top: 0.5rem;
+            border-top: 1px solid #e9ecef;
+        }
+        
+        /* Grid responsive ajustado */
+        .productos-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 3rem;
         }
         
         @media (max-width: 768px) {
@@ -135,6 +232,19 @@ include 'header.php'; // Incluye el header
             .carousel-slide h2 {
                 font-size: 1.8rem;
                 padding: 0.5rem 1rem;
+            }
+            
+            .productos-grid {
+                grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+                gap: 1rem;
+            }
+            
+            .producto-card {
+                height: 260px;
+            }
+            
+            .imagen-container {
+                height: 100px;
             }
         }
     </style>
@@ -216,19 +326,22 @@ include 'header.php'; // Incluye el header
                                         <div class="sin-imagen">Sin imagen</div>
                                     <?php endif; ?>
                                 </div>
-                                <div class="brand-logo"><?= strtoupper(substr($producto['nombre'], 0, 1)) ?></div>
-                                <h3><?= htmlspecialchars($producto['nombre']) ?></h3>
-                                <div class="origen"><?= htmlspecialchars($producto['origen']) ?></div>
-                                <div class="intensidad">
-                                    <span class="intensidad-label">Durabilidad:</span>
-                                    <div class="intensidad-barras">
-                                        <?php for ($i = 1; $i <= 5; $i++): ?>
-                                            <div class="barra <?= $i <= $producto['durabilidad'] ? 'activa' : '' ?>"></div>
-                                        <?php endfor; ?>
+                                
+                                <div class="producto-info">
+                                    <h3><?= htmlspecialchars($producto['nombre']) ?></h3>
+                                    <div class="origen"><?= htmlspecialchars($producto['origen']) ?></div>
+                                    
+                                    <div class="intensidad">
+                                        <span class="intensidad-label">Durabilidad:</span>
+                                        <div class="intensidad-barras">
+                                            <?php for ($i = 1; $i <= 5; $i++): ?>
+                                                <div class="barra <?= $i <= $producto['durabilidad'] ? 'activa' : '' ?>"></div>
+                                            <?php endfor; ?>
+                                        </div>
                                     </div>
+                                    
+                                    <div class="precio">$<?= number_format($producto['precio'], 2, ',', '.') ?></div>
                                 </div>
-                                <p><?= htmlspecialchars($producto['descripcion']) ?></p>
-                                <div class="precio">$<?= number_format($producto['precio'], 2, ',', '.') ?></div>
                             </a>
                         </div>
                     <?php endforeach; ?>
